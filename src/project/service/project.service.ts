@@ -1,8 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProjectDto } from '../dto/project.dto';
+import { ConfigService } from '@nestjs/config';
+import { log } from 'console';
 
 @Injectable()
 export class ProjectService {
+  constructor(private readonly configService: ConfigService) {}
   private readonly projects: any[] = [
     {
       id: 1,
@@ -23,6 +26,8 @@ export class ProjectService {
 
   getProject(id: number): any {
     const project = this.projects.find((project) => project.id === id);
+    console.log(this.configService.get('DB_HOST'));
+    console.log(process.env.NODE_ENV);
 
     if (!project) {
       throw new NotFoundException('project not found');
