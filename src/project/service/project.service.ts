@@ -1,11 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ProjectDto } from '../dto/project.dto';
-import { ConfigService } from '@nestjs/config';
-import { log } from 'console';
+import { ConfigType } from '@nestjs/config';
+import config from '../../config';
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    @Inject(config.KEY)
+    private readonly configService: ConfigType<typeof config>,
+  ) {}
   private readonly projects: any[] = [
     {
       id: 1,
@@ -26,7 +29,7 @@ export class ProjectService {
 
   getProject(id: number): any {
     const project = this.projects.find((project) => project.id === id);
-    console.log(this.configService.get('DB_HOST'));
+    console.log(this.configService.database.host);
     console.log(process.env.NODE_ENV);
 
     if (!project) {

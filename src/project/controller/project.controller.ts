@@ -12,7 +12,9 @@ import {
 } from '@nestjs/common';
 import { ParseIntPipe } from '../../common/pipe/parse-int.pipe';
 import { ProjectDto } from '../dto/project.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('project')
 @Controller('project')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
