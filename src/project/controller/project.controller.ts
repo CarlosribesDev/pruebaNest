@@ -33,19 +33,19 @@ export class ProjectController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  createProject(@Body() project: ProjectDto): ProjectDto {
-    return this.projectService.createProject(project);
+  async createProject(@Body() dto: ProjectDto): Promise<ProjectDto> {
+    return this.projectService.createProject(dto);
   }
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  updateProject(@Body() project: ProjectDto): ProjectDto {
-    return this.projectService.updateProject(project);
+  async updateProject(@Body() dto: ProjectDto): Promise<ProjectDto> {
+    return this.projectService.updateProject(dto);
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.OK)
-  deleteProject(@Param('id') id: number): string {
+  async deleteProject(@Param('id') id: number): Promise<void> {
     return this.projectService.deleteProject(id);
   }
 }
