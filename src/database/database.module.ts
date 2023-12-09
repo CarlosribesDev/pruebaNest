@@ -18,6 +18,7 @@ import config from 'src/config';
           database: name,
           entities: [],
           synchronize: true,
+          autoLoadEntities: true,
           ssl: {},
         };
       },

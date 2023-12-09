@@ -1,36 +1,22 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ProjectDto } from '../dto/project.dto';
 import { ConfigType } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import config from '../../config';
+import { Project } from '../entity/project.entity';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @Inject(config.KEY)
     private readonly configService: ConfigType<typeof config>,
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
   ) {}
-  private readonly projects: any[] = [
-    {
-      id: 1,
-      name: 'project 1',
-      description: 'project 1 description',
-    },
-    {
-      id: 2,
-      name: 'project 2',
-      description: 'project 2 description',
-    },
-    {
-      id: 3,
-      name: 'project 3',
-      description: 'project 3 description',
-    },
-  ];
 
-  getProject(id: number): any {
-    const project = this.projects.find((project) => project.id === id);
-    console.log(this.configService.database.host);
-    console.log(process.env.NODE_ENV);
+  async getProject(id: number): Promise<Project> {
+    const project = await this.projectRepository.findOne({ where: { id: id } });
 
     if (!project) {
       throw new NotFoundException('project not found');
@@ -39,8 +25,8 @@ export class ProjectService {
     return project;
   }
 
-  getProjects(): any[] {
-    return this.projects;
+  async getProjects(): Promise<Project[]> {
+    return await this.projectRepository.find();
   }
 
   createProject(project: ProjectDto): any {

@@ -21,8 +21,14 @@ export class ProjectController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  getProject(@Param('id', ParseIntPipe) id: number): ProjectDto {
-    return this.projectService.getProject(id);
+  async getProject(@Param('id', ParseIntPipe) id: number): Promise<ProjectDto> {
+    return await this.projectService.getProject(id);
+  }
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async getProjects(): Promise<ProjectDto[]> {
+    return await this.projectService.getProjects();
   }
 
   @Post()
