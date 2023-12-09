@@ -21,31 +21,31 @@ export class ProjectController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  async getProject(@Param('id', ParseIntPipe) id: number): Promise<ProjectDto> {
-    return await this.projectService.getProject(id);
+  getProject(@Param('id', ParseIntPipe) id: number): Promise<ProjectDto> {
+    return this.projectService.getProject(id);
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getProjects(): Promise<ProjectDto[]> {
-    return await this.projectService.getProjects();
+  getProjects(): Promise<ProjectDto[]> {
+    return this.projectService.getProjects();
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async createProject(@Body() dto: ProjectDto): Promise<ProjectDto> {
+  createProject(@Body() dto: ProjectDto): Promise<ProjectDto> {
     return this.projectService.createProject(dto);
   }
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  async updateProject(@Body() dto: ProjectDto): Promise<ProjectDto> {
+  updateProject(@Body() dto: ProjectDto): Promise<ProjectDto> {
     return this.projectService.updateProject(dto);
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.OK)
-  async deleteProject(@Param('id') id: number): Promise<void> {
+  deleteProject(@Param('id') id: number): Promise<void> {
     return this.projectService.deleteProject(id);
   }
 }
